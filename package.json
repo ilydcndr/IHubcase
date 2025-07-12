@@ -1,0 +1,24 @@
+{
+  "name": "employee-manager",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vaadin/checkbox": "^24.8.3",
+    "@vaadin/dialog": "^24.8.3",
+    "@vaadin/email-field": "^24.8.3",
+    "lit": "^3.3.0"
+  },
+  "devDependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
+    "@vaadin/router": "^2.0.0",
+    "@vaadin/select": "^24.8.3",
+    "redux": "^5.0.1",
+    "vite": "^7.0.4"
+  }
+}
