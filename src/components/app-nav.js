@@ -9,7 +9,7 @@ import '@vaadin/select';
 export class AppNav extends LitElement {
   static styles = css`
     nav {
-      margin-top: 15px;
+      margin: 15px 5px;
       display:flex;
       justify-content: space-between;
     }
@@ -29,7 +29,6 @@ export class AppNav extends LitElement {
     }
     .home-logo {
       border-radius: 5px;
-      margin-left: 10px;
     }
     .nav-left span {
       font-weight: bolder;
@@ -61,12 +60,12 @@ export class AppNav extends LitElement {
           <div>
             <a href="/employees" class="centered">
               <img class="user-icon logo" src="${userIcon}" alt="User Icon" />
-              <span>Employees</span>
+              <span>Çalışanlar</span>
             </a>
           </div>
           <div class="centered">
             <img src="${plusIcon}" class="logo" alt="logo" />
-            <span>Add New</span>
+            <span>Ekle</span>
           </div>
           
           <!--

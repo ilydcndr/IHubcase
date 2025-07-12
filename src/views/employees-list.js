@@ -1,13 +1,20 @@
 import { LitElement, html, css } from 'lit';
-import '../components/employees-list-item.js'; // küçük component importu
+import '../components/employees-list-item.js';
 import { store } from '../redux/store.js';
+import { BaseView } from '../components/base-view.js'
 
-export class EmployeesList extends LitElement {
+export class EmployeesList extends BaseView {
   static styles = css`
-    :host {
-      display: block;
-      padding: 16px;
-      font-family: Arial, sans-serif;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    .theme {
+      color:orange;
+    }
+    th {
+      padding: 15px 0;
     }
   `;
 
@@ -25,10 +32,9 @@ export class EmployeesList extends LitElement {
       const state = store.getState();
       this.employees = state.employees.list;
     });
+  }
 
-    this.keys = this.employees ? Object.keys(this.employees[0]) : null;
-
-    this.keyMap = {
+    keyMap = {
     "first_name": "isim",
     "last_name": "Soyisim",
     "birth_date": "Doğum Tarihi",
@@ -36,31 +42,31 @@ export class EmployeesList extends LitElement {
     "phone": "Telefon",
     "email": "E-mail",
     "department": "Departman",
-    "position": "Pozisyon"
+    "position": "Pozisyon",
+    "action":"Eylem"
     }
-  }
 
   render() {
     return html`
-    <div>
-      <h1>Employees List</h1>
-      <div>
-        <div>Liste Görünümü</div>
-        <div>Grid Görünümü</div>
-      </div>
-    </div>
-    <div>
-      ${Object.values(this.keyMap).map(value => html`<ol>${value}</ol>`)}
-    </div>
-    <div>
-      ${this.employees?.map(employee => html`
-        <ol>
-          ${this.keys?.map(key => html`
-            <li>${employee[key]}</li>
-          `)}
-        </ol>
-      `)}
-    </div>
+    <base-view>
+        <table>
+          <thead>
+            <tr class="theme">
+              ${Object.values(this.keyMap).map(value => html`<th>${value}</th>`)}
+            </tr>
+          </thead>
+          <tbody>
+              ${this.employees.map(
+                employee => html`
+                  <employees-list-item
+                    .employee=${employee}
+                    .keyMap=${this.keyMap}>
+                  </employees-list-item>
+                `
+              )}
+            </tbody>
+        </table>
+  </base-view>
     `;
   }
 }
