@@ -1,9 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import ingLogo from '../assets/img/ing-logo.png';
-import ingFlame from '../assets/img/eng-flame.png';
-import trFlame from '../assets/img/tr-flame.png';
 import userIcon from '../assets/img/employee.png';
 import plusIcon from '../assets/img/plus.png';
+import { ChangeLanguage } from './change-language';
 import '@vaadin/select';
 
 export class AppNav extends LitElement {
@@ -24,7 +23,7 @@ export class AppNav extends LitElement {
     .logo {
       width: 25px;
       height: 25px;
-      color:orange;
+      color:var(--theme-color);
       margin-right:15px;
     }
     .home-logo {
@@ -36,12 +35,15 @@ export class AppNav extends LitElement {
       align-items: center;
     }
     .user-icon {
-      color: orange;
+      color: $theme-color;
     }
     .nav-right {
       display:flex;
       gap:15px;
       align-items:center;
+    }
+    .add-employee {
+      cursor:pointer;
     }
   `;
 
@@ -63,23 +65,11 @@ export class AppNav extends LitElement {
               <span>Çalışanlar</span>
             </a>
           </div>
-          <div class="centered">
+          <div class="centered add-employee">
             <img src="${plusIcon}" class="logo" alt="logo" />
             <span>Ekle</span>
           </div>
-          
-          <!--
-          <vaadin-select label="ING">
-            <vaadin-list-box>
-              <vaadin-item>
-                <img src="${ingFlame}" alt="ING Flame" class="logo" />
-              </vaadin-item>
-              <vaadin-item>
-                <img src="${trFlame}" alt="TR Flame" class="logo" />
-              </vaadin-item>
-            </vaadin-list-box>
-          </vaadin-select>
-          -->
+          <change-language></change-language>
         </div>
       </nav>
     `;

@@ -30,13 +30,13 @@ export class EmployeeFormContent extends BaseView {
       background: white;
     }
     vaadin-date-picker::part(toggle-button) {
-      color: orange;
+      color: var(--theme-color);;
     }
     vaadin-button {
       width: 25%;
     }
     .button-type-one {
-      background:orange;
+      background:var(--theme-color);;
       color:white;
       font-size:bold;
     }
@@ -49,13 +49,11 @@ export class EmployeeFormContent extends BaseView {
   `;
 
   static properties = {
-    tableView: { type: Boolean },
     formData: { type: Object },
   };
 
   constructor() {
     super();
-    this.tableView = false;
     this.errors = {};
     this.formData = {
       first_name: '',
@@ -67,8 +65,8 @@ export class EmployeeFormContent extends BaseView {
       department: '',
       position: '',
     };
-    this.departments = ['HR', 'Marketing', 'IT', 'Finance'];
-    this.positions = ['Manager', 'Developer', 'Designer', 'Analyst'];
+    this.departments = ['Analytics', ', Tech' ];
+    this.positions = ['Junior', 'Medior', 'Senior' ];
   }
 
   handleInput(e) {
@@ -165,7 +163,7 @@ export class EmployeeFormContent extends BaseView {
 
   render() {
     return html`
-      <base-view .tableView=${this.tableView}>
+      <base-view>
         <div class="employee-form">
           <vaadin-text-field
             label="İsim"

@@ -11,7 +11,7 @@ export class EmployeesList extends BaseView {
       table-layout: fixed;
     }
     .theme {
-      color:orange;
+      color:var(--theme-color);;
     }
     th {
       padding: 15px 0;
@@ -19,7 +19,8 @@ export class EmployeesList extends BaseView {
   `;
 
   static properties = {
-    employees: { type: Array }
+    employees: { type: Array },
+    isEmployeeList: { type: Boolean }
   };
 
   constructor() {
@@ -35,6 +36,7 @@ export class EmployeesList extends BaseView {
   }
 
     keyMap = {
+    "key": "",
     "first_name": "isim",
     "last_name": "Soyisim",
     "birth_date": "Doğum Tarihi",
@@ -48,7 +50,7 @@ export class EmployeesList extends BaseView {
 
   render() {
     return html`
-    <base-view>
+    <base-view .isEmployeeList=${true}>
         <table>
           <thead>
             <tr class="theme">
@@ -64,7 +66,7 @@ export class EmployeesList extends BaseView {
                   </employees-list-item>
                 `
               )}
-            </tbody>
+          </tbody>
         </table>
   </base-view>
     `;

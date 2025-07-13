@@ -1,4 +1,7 @@
 import { LitElement, html, css } from 'lit';
+import listImg from '../assets/icons/list-solid.svg';
+import gridImg from '../assets/icons/grid.svg';
+import searchImg from '../assets/icons/search.svg';
 
 export class BaseView extends LitElement {
   static styles = css`
@@ -8,7 +11,10 @@ export class BaseView extends LitElement {
       padding: 20px 0;
       box-sizing: border-box;
     }
-
+    .logo {
+      width: 24px;
+      height: 24px;
+    }
     .base-content {
       overflow-x: auto;
       max-width: 1200px;
@@ -18,7 +24,7 @@ export class BaseView extends LitElement {
       box-sizing: border-box;
     }
     .theme {
-      color:orange;
+      color:var(--theme-color);;
     }
     .table-banner {
       display:flex;
@@ -31,18 +37,20 @@ export class BaseView extends LitElement {
     }
     .table-view {
       display: flex;
-      gap: 10px;
+      gap: 25px;
+    }
+    .table-view img {
+      cursor:pointer;
     }
   `;
 
   static properties = {
-    tableView: { type: Boolean },
+    isEmployeeList: { type: Boolean },
    // edit mode eklenecek editMode: { type: Boolean}
   };
 
   constructor() {
     super();
-    this.tableView = false;
    // this.editMode = false
   }
 
@@ -57,10 +65,14 @@ export class BaseView extends LitElement {
       <div class="base-frame" @add-employee=${this.handleAddEmployee}>
         <div class="table-banner theme">
             <h1>Çalışan Ekle</h1>
-            ${this.tableView ? html `
+            ${this.isEmployeeList ? html `
               <div class="table-view">
-              <div>Liste Görünümü</div>
-              <div>Grid Görünümü</div>
+                <div>
+                  <img class="logo" src="${listImg}" alt="List Img" />
+                </div>
+                <div>
+                  <img class="logo" src="${gridImg}" alt="Grid Img" />
+                </div>
             </div> `: null}
         </div>
         <div class="base-content">

@@ -1,4 +1,7 @@
 import { LitElement, html, css } from 'lit';
+import editIcon from '../assets/icons/edit.svg';
+import trashIcon from '../assets/icons/trash-solid.svg';
+import '@vaadin/checkbox';
 
 export class EmployeesListItem extends LitElement {
   static styles = css`
@@ -38,7 +41,7 @@ export class EmployeesListItem extends LitElement {
       gap: 10px;
     }
     .theme {
-      color:orange;
+      color:var(--theme-color);;
     }
     th,td {
       font-weight:400;;
@@ -52,6 +55,24 @@ export class EmployeesListItem extends LitElement {
       padding: 18px 0;
       border-bottom: 1px solid #e0e0e0;
     }
+    .action-list {
+      display:flex;
+      gap: 15px;
+      justify-content: center;
+    }
+    .action-list img {
+      width:15px;
+      height:15px;
+      cursor: pointer;
+    }
+    .employee-checkbox {
+      text-align: center;
+      vertical-align: middle;
+    }
+    vaadin-checkbox[checked]::part(checkbox) {
+      background-color: var(--theme-color);
+      border-color: var(--theme-color);
+    }
   `;
 
   static properties = {
@@ -64,13 +85,40 @@ export class EmployeesListItem extends LitElement {
     this.keyMap= '';
   }
 
+ actionArea = () => html`
+    <div class="action-list">
+        <div @click=${() => this.changeLanguage('tr')}>
+            <img src="${editIcon}" class="logo" alt="Edit" />
+        </div>
+        <div @click=${() => this.changeLanguage('en')}>
+            <img src="${trashIcon}" class="logo" alt="Trash" />
+        </div>
+    </div>
+  `
+
+  checkboxArea = () => html `
+      <vaadin-checkbox
+      ?checked=${this.checked}
+      @checked-changed=${e => this.checked = e.detail.value}
+    >
+    </vaadin-checkbox>
+  `
   render() {
-    return html`          
+    return html`     
     <tr>
       ${Object.keys(this.keyMap).map(
-        key => html`<td>${this.employee[key]}</td>`
-      )}
-    </tr>`
+        (key, index, arr) => {
+          const isLast = index === arr.length - 1;
+          return html`
+        <td>
+          ${isLast
+              ? this.actionArea()
+              : !this.employee[key]
+              ? this.checkboxArea()
+              : this.employee[key]}
+        </td>`
+        })}
+    </tr>`;
   }
 }
 
