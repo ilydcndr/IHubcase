@@ -5,7 +5,7 @@ export class EmployeesListItem extends LitElement {
     :host {
       display:contents;
     }
-        th,td {
+    th,td {
       font-weight:400;;
       font-size:14px;
       text-align: center;

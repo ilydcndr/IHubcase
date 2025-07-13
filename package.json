@@ -9,9 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vaadin/button": "^24.8.3",
     "@vaadin/checkbox": "^24.8.3",
+    "@vaadin/combo-box": "^24.8.3",
+    "@vaadin/date-picker": "^24.8.3",
     "@vaadin/dialog": "^24.8.3",
     "@vaadin/email-field": "^24.8.3",
+    "@vaadin/form-layout": "^24.8.3",
+    "@vaadin/text-field": "^24.8.3",
     "lit": "^3.3.0"
   },
   "devDependencies": {

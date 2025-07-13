@@ -37,18 +37,26 @@ export class BaseView extends LitElement {
 
   static properties = {
     tableView: { type: Boolean },
+   // edit mode eklenecek editMode: { type: Boolean}
   };
 
   constructor() {
     super();
-    this.tableView= false;
+    this.tableView = false;
+   // this.editMode = false
   }
+
+ /* handleAddEmployee(e) {
+    this.editMode= !this.editMode;
+    html ıcı
+    <---<h1>${this.editMode ? 'Çalışan Düzenle' : 'Çalışan Ekle'}</h1>--->
+  }*/
 
   render() {
     return html`
-      <div class="base-frame">
+      <div class="base-frame" @add-employee=${this.handleAddEmployee}>
         <div class="table-banner theme">
-            <h1>Çalışan Listesi</h1>
+            <h1>Çalışan Ekle</h1>
             ${this.tableView ? html `
               <div class="table-view">
               <div>Liste Görünümü</div>
