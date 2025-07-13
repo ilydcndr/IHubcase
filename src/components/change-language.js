@@ -1,18 +1,11 @@
 import { LitElement, html, css } from 'lit';
 import trFlame from '../assets/img/tr-flame.png';
 import engFlame from '../assets/img/eng-flame.png';
+import { store } from '../redux/store';
+import { setLanguage } from '../redux/store';
 
 export class ChangeLanguage extends LitElement {
-  static properties = {
-    lang: { type: String },
-  };
-
-  constructor() {
-    super();
-    this.lang = 'tr';
-  }
-
-  static styles = css`
+    static styles = css`
     .flame {
         width:30px;
         height:20px;
@@ -33,15 +26,27 @@ export class ChangeLanguage extends LitElement {
     }
   `;
 
+
+  static properties = {
+    lang: { type: String },
+  };
+
+  constructor() {
+    super();
+    this.lang = document.documentElement.lang || 'en';
+  }
+
   changeLanguage(lang) {
-    this.lang = lang;
+    store.dispatch(setLanguage(lang))
+    console.log(lang,"lang")
   }
 
   render() {
     return html`
+
       <div class="flame-select">
         <div>
-           <img src="${trFlame}" class="flame" alt="TR Flame" />
+           <img src="${this.lang==='tr'? trFlame : engFlame}" class="flame" alt="Flame" />
         </div>
         <div class="flame-list">
             <div @click=${() => this.changeLanguage('tr')}>

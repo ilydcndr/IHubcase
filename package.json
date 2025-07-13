@@ -17,6 +17,7 @@
     "@vaadin/email-field": "^24.8.3",
     "@vaadin/form-layout": "^24.8.3",
     "@vaadin/text-field": "^24.8.3",
+    "i18next": "^25.3.2",
     "lit": "^3.3.0"
   },
   "devDependencies": {

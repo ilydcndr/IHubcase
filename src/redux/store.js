@@ -11,8 +11,24 @@ const employeesSlice = createSlice({
   }
 });
 
+const changeLanguageSlice = createSlice({
+  name: 'language',
+  initialState: {
+    lang: 'en',
+  },
+  reducers: {
+    setLanguage(state, action) {
+      state.lang = action.payload;
+    }
+  }
+});
+
+
+export const { setLanguage } = changeLanguageSlice.actions;
+
 export const store = configureStore({
   reducer: {
     employees: employeesSlice.reducer,
+    language: changeLanguageSlice.reducer
   }
 });

@@ -3,9 +3,11 @@ import ingLogo from '../assets/img/ing-logo.png';
 import userIcon from '../assets/img/employee.png';
 import plusIcon from '../assets/img/plus.png';
 import { ChangeLanguage } from './change-language';
+import { LanguageListener } from './listen-language';
+import { t } from '../i18n/i18n';
 import '@vaadin/select';
 
-export class AppNav extends LitElement {
+export class AppNav extends LanguageListener {
   static styles = css`
     nav {
       margin: 15px 5px;
@@ -67,7 +69,7 @@ export class AppNav extends LitElement {
           </div>
           <div class="centered add-employee">
             <img src="${plusIcon}" class="logo" alt="logo" />
-            <span>Ekle</span>
+            <span>${t('add_new')}</span>
           </div>
           <change-language></change-language>
         </div>

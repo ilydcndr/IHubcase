@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
+import { LanguageListener } from '../components/listen-language';
 
-export class NotFoundPage extends LitElement {
+export class NotFoundPage extends LanguageListener {
   static styles = css`
     :host {
       display: block;

@@ -2,6 +2,7 @@ import { html, css } from 'lit';
 import { BaseView } from '../components/base-view';
 import { isValidDate, isValidName, isValidEmail, isEmpty, isValidPhone } from '../helper.js';
 import { store } from '../redux/store.js';
+import { t } from '../i18n/i18n';
 import '@vaadin/text-field';
 import '@vaadin/date-picker';
 import '@vaadin/combo-box';
@@ -254,7 +255,7 @@ export class EmployeeFormContent extends BaseView {
           </vaadin-button>
 
           <vaadin-button theme="tertiary" class="button-type-two" @click=${this.handleCancel}>
-            İptal
+            ${t('cancel')}
           </vaadin-button>
         </div>
 

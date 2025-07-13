@@ -2,8 +2,9 @@ import { LitElement, html, css } from 'lit';
 import listImg from '../assets/icons/list-solid.svg';
 import gridImg from '../assets/icons/grid.svg';
 import searchImg from '../assets/icons/search.svg';
+import { LanguageListener  } from './listen-language';
 
-export class BaseView extends LitElement {
+export class BaseView extends LanguageListener {
   static styles = css`
     .base-frame {
       background-color: #f2f2f2;
