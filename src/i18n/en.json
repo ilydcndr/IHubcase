@@ -1,7 +1,7 @@
 {
     "position": "Position",
     "employees_menu": "Employees",
-    "date_of_birth": "Date of Birth",
+    "birth_date": "Date of Birth",
     "phone": "Phone",
     "email": "Email",
     "confirm_modal_title": "Are You Sure?",
@@ -10,7 +10,7 @@
     "last_name": "Last Name",
     "delete_confirm_message": "Selected employee record of <strong>{fullname}</strong> will be deleted",
     "welcome_title": "Welcome to ING Hubs",
-    "date_of_employment": "Date of Employment",
+    "employment_date": "Date of Employment",
     "actions": "Actions",
     "proceed": "Proceed",
     "search": "Search",

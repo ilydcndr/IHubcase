@@ -194,7 +194,7 @@ export class EmployeeFormContent extends BaseView {
           ></vaadin-text-field>
 
           <vaadin-date-picker
-            label=${t('date_of_birth')}
+            label=${t('birth_date')}
             name="birth_date"
             .value=${this.formData.birth_date}
             @value-changed=${this.handleInput}
@@ -204,7 +204,7 @@ export class EmployeeFormContent extends BaseView {
           ></vaadin-date-picker>
 
           <vaadin-date-picker
-            label=${t('date_of_employment')}
+            label=${t('employment_date')}
             name="employment_date"
             .value=${this.formData.employment_date}
             @value-changed=${this.handleInput}

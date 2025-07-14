@@ -127,6 +127,3 @@ actionArea = (employee) => html`
 }
 
 customElements.define('employees-list-item', EmployeesListItem);
-
-
-
