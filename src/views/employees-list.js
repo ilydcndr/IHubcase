@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import '../components/employees-list-item.js';
 import { store } from '../redux/store.js';
-import { BaseView } from '../components/base-view.js'
+import { BaseView } from '../base/base-view.js'
 
 export class EmployeesList extends BaseView {
   static styles = css`

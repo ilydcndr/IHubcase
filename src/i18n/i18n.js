@@ -26,5 +26,9 @@ store.subscribe(() => {
   }
 });
 
+export function translate(key) {
+  return i18next.t(key) || key;
+}
+
 export const t = (...args) => i18next.t(...args);
 export default i18next;

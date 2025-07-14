@@ -12,8 +12,7 @@ export class HomePage extends LanguageListener {
 
   render() {
     return html`
-      <h1>Welcome to Home Page</h1>
-      <p>This is the main landing page.</p>
+      <h1>${t('welcome_title')}</h1>
     `;
   }
 }

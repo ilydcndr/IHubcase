@@ -9,8 +9,9 @@ export class AppRoot extends LitElement {
     const router = new Router(routerOutlet);
     router.setRoutes([
       { path: '/', component: 'home-page' },
-      { path: '/employeesx', component: 'employee-form' },
       { path: '/employees', component: 'employees-list' },
+      { path: '/employees/add', component: 'employee-form' },
+      { path: '/employees/edit/:id', component: 'employee-form' },
       { path: '(.*)', component: 'not-found-page'},
       
     ]);

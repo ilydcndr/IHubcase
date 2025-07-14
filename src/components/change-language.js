@@ -26,7 +26,6 @@ export class ChangeLanguage extends LitElement {
     }
   `;
 
-
   static properties = {
     lang: { type: String },
   };
@@ -37,6 +36,7 @@ export class ChangeLanguage extends LitElement {
   }
 
   changeLanguage(lang) {
+    this.lang = lang;
     store.dispatch(setLanguage(lang))
     console.log(lang,"lang")
   }
@@ -46,7 +46,7 @@ export class ChangeLanguage extends LitElement {
 
       <div class="flame-select">
         <div>
-           <img src="${this.lang==='tr'? trFlame : engFlame}" class="flame" alt="Flame" />
+           <img src="${this.lang ==='tr'? trFlame : engFlame}" class="flame" alt="Flame" />
         </div>
         <div class="flame-list">
             <div @click=${() => this.changeLanguage('tr')}>

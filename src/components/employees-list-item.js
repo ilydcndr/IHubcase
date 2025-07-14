@@ -2,6 +2,8 @@ import { LitElement, html, css } from 'lit';
 import editIcon from '../assets/icons/edit.svg';
 import trashIcon from '../assets/icons/trash-solid.svg';
 import '@vaadin/checkbox';
+import { Router } from '@vaadin/router';
+import { store, deleteEmployee } from '../redux/store';
 
 export class EmployeesListItem extends LitElement {
   static styles = css`
@@ -76,28 +78,30 @@ export class EmployeesListItem extends LitElement {
   `;
 
   static properties = {
-    employee: { type: Array },
-    keyMap: { type: Object }
+    employee: { type: Object },
   };
 
-  constructor() {
-    super();
-    this.keyMap= '';
-  }
+editEmployee = (emp) => {
+  Router.go(`/employees/edit/${emp.id}`);
+}
 
- actionArea = () => html`
-    <div class="action-list">
-        <div @click=${() => this.changeLanguage('tr')}>
-            <img src="${editIcon}" class="logo" alt="Edit" />
-        </div>
-        <div @click=${() => this.changeLanguage('en')}>
-            <img src="${trashIcon}" class="logo" alt="Trash" />
-        </div>
+deleteEmployee = (emp) => {
+  store.dispatch(deleteEmployee(emp));
+}
+
+actionArea = (employee) => html`
+  <div class="action-list">
+    <div @click=${(e) => this.editEmployee(employee)}>
+      <img src="${editIcon}" class="logo" alt="Edit" />
     </div>
-  `
+    <div @click=${(e) => this.deleteEmployee(employee)}>
+      <img src="${trashIcon}" class="logo" alt="Trash" />
+    </div>
+  </div>
+`
 
   checkboxArea = () => html `
-      <vaadin-checkbox
+    <vaadin-checkbox
       ?checked=${this.checked}
       @checked-changed=${e => this.checked = e.detail.value}
     >
@@ -112,7 +116,7 @@ export class EmployeesListItem extends LitElement {
           return html`
         <td>
           ${isLast
-              ? this.actionArea()
+              ? this.actionArea(this.employee)
               : !this.employee[key]
               ? this.checkboxArea()
               : this.employee[key]}
@@ -123,3 +127,6 @@ export class EmployeesListItem extends LitElement {
 }
 
 customElements.define('employees-list-item', EmployeesListItem);
+
+
+

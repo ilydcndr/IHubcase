@@ -1,12 +1,13 @@
 import { html, css } from 'lit';
-import { BaseView } from '../components/base-view';
+import { BaseView } from '../base/base-view';
 import { isValidDate, isValidName, isValidEmail, isEmpty, isValidPhone } from '../helper.js';
-import { store } from '../redux/store.js';
 import { t } from '../i18n/i18n';
 import '@vaadin/text-field';
 import '@vaadin/date-picker';
 import '@vaadin/combo-box';
 import '@vaadin/button';
+import { Router } from '@vaadin/router';
+import { saveEmployee, editEmployee, store } from '../redux/store.js';
 
 export class EmployeeFormContent extends BaseView {
   static styles = css`
@@ -51,6 +52,7 @@ export class EmployeeFormContent extends BaseView {
 
   static properties = {
     formData: { type: Object },
+    isEditMode: { type : String },
   };
 
   constructor() {
@@ -66,8 +68,45 @@ export class EmployeeFormContent extends BaseView {
       department: '',
       position: '',
     };
-    this.departments = ['Analytics', ', Tech' ];
+    this.departments = ['Analytics', 'Tech' ];
     this.positions = ['Junior', 'Medior', 'Senior' ];
+    this.isEditMode= false;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    const pathname = window.location.pathname;
+
+    if (pathname.startsWith('/employees/edit/')) {
+      this.isEditMode = true;
+      const id = pathname.split('/').pop();
+      this.employeeId = Number(id);
+      console.log(this.employeeId, "employeeId");
+      this.loadEmployeeData();
+    }
+  }
+
+  loadEmployeeData() {
+    this.formData = store.getState().employees.list.find(emp => emp.id === this.employeeId);
+    this.requestUpdate();
+  }
+
+  handleSubmit() {
+    if (this.validateForm()) {
+      console.log(this.formData,"editttttformDataaa")
+      const newEmployee = {
+        id: this.isEditMode ? this.employee.id : Date.now(), 
+        ...this.formData,
+      };
+      if(this.isEditMode){
+        console.log(this.employee.id,"edittttt iddd")
+        store.dispatch(editEmployee(newEmployee));
+      } else {
+        store.dispatch(saveEmployee(newEmployee));
+      }
+      this.resetForm();
+      Router.go('/employees');
+    } 
   }
 
   handleInput(e) {
@@ -80,72 +119,9 @@ export class EmployeeFormContent extends BaseView {
     };
   }
 
-  validateForm() {
-    this.errors = {};
-
-    if (isEmpty(this.formData.first_name)) {
-      this.errors.first_name = 'İsim zorunlu';
-    } else if (!isValidName(this.formData.first_name)) {
-      this.errors.first_name = 'İsim alanı hatalı';
-    }
-
-    if (isEmpty(this.formData.last_name)) {
-      this.errors.last_name = 'Soyisim zorunlu';
-    } else if (!isValidName(this.formData.last_name)) {
-      this.errors.last_name = 'Soyisim alanı hatalı';
-    }
-
-    if (isEmpty(this.formData.birth_date)) {
-      this.errors.birth_date = 'Doğum tarihi zorunlu';
-    } else if (!isValidDate(this.formData.birth_date)) {
-      this.errors.birth_date = 'Tarih bugünden ileri olamaz';
-    }
-
-    if (isEmpty(this.formData.employment_date)) {
-      this.errors.employment_date = 'İşe başlama tarihi zorunlu';
-    } else if (!isValidDate(this.formData.employment_date)) {
-      this.errors.employment_date = 'Tarih bugünden ileri olamaz';
-    }
-
-    if (isEmpty(this.formData.phone)) {
-      this.errors.phone = 'Telefon numarası zorunlu';
-    } else if (!isValidPhone(this.formData.phone)) {
-      this.errors.phone = 'Telefon formatını kontrol et';
-    }
-
-    if (isEmpty(this.formData.email)) {
-      this.errors.email = 'Email zorunlu';
-    } else if (!isValidEmail(this.formData.email)) {
-      this.errors.email = 'Email formatını kontrol et';
-    }
-
-    if (isEmpty(this.formData.department)) {
-      this.errors.department = 'Departman seçilmeli';
-    }
-
-    if (isEmpty(this.formData.position)) {
-      this.errors.position = 'Pozisyon seçilmeli';
-    }
-
-    this.requestUpdate();
-    return Object.keys(this.errors).length === 0;
-  }
-
-  handleSubmit() {
-    if (this.validateForm()) {
-      const newEmployee = {
-        id: Date.now(),
-        ...this.formData,
-      };
-
-      console.log("add")
-      //store.dispatch(addEmployee(newEmployee));
-      this.resetForm();
-    }
-  }
-
   handleCancel() {
     this.resetForm();
+    Router.go('/employees');
   }
 
   resetForm() {
@@ -162,12 +138,43 @@ export class EmployeeFormContent extends BaseView {
     this.errors = {};
   }
 
+  validateForm() {
+    let isValid = true;
+
+    const validations = [
+      { key: 'first_name', error: 'İsim zorunlu', validate: isValidName },
+      { key: 'last_name', error: 'Soyisim zorunlu', validate: isValidName },
+      { key: 'birth_date', error: 'Doğum tarihi zorunlu', validate: isValidDate },
+      { key: 'employment_date', error: 'İşe başlama tarihi zorunlu', validate: isValidDate },
+      { key: 'phone', error: 'Telefon numarası zorunlu', validate: isValidPhone },
+      { key: 'email', error: 'Email zorunlu', validate: isValidEmail },
+      { key: 'department', error: 'Departman seçilmeli', validate: null },
+      { key: 'position', error: 'Pozisyon seçilmeli', validate: null }
+    ];
+
+    validations.forEach(({ key, error, validate }) => {
+      const inputElement = this.shadowRoot.querySelector(`[name="${key}"]`);
+
+      if (isEmpty(this.formData[key])) {
+        inputElement.invalid = true;
+        inputElement.errorMessage = error;
+        isValid = false;
+      } else if (validate && !validate(this.formData[key])) {
+        inputElement.invalid = true;
+        inputElement.errorMessage = error + ' (Hatalı format)';
+        isValid = false;
+      }
+    });
+
+    return isValid;
+  }
+
   render() {
     return html`
       <base-view>
         <div class="employee-form">
           <vaadin-text-field
-            label="İsim"
+            label=${t('first_name')}
             name="first_name"
             .value=${this.formData.first_name}
             @input=${this.handleInput}
@@ -177,7 +184,7 @@ export class EmployeeFormContent extends BaseView {
           ></vaadin-text-field>
 
           <vaadin-text-field
-            label="Soyisim"
+            label=${t('last_name')}
             name="last_name"
             .value=${this.formData.last_name}
             @input=${this.handleInput}
@@ -187,7 +194,7 @@ export class EmployeeFormContent extends BaseView {
           ></vaadin-text-field>
 
           <vaadin-date-picker
-            label="Doğum Tarihi"
+            label=${t('date_of_birth')}
             name="birth_date"
             .value=${this.formData.birth_date}
             @value-changed=${this.handleInput}
@@ -197,7 +204,7 @@ export class EmployeeFormContent extends BaseView {
           ></vaadin-date-picker>
 
           <vaadin-date-picker
-            label="İşe Başlama Tarihi"
+            label=${t('date_of_employment')}
             name="employment_date"
             .value=${this.formData.employment_date}
             @value-changed=${this.handleInput}
@@ -207,7 +214,7 @@ export class EmployeeFormContent extends BaseView {
           ></vaadin-date-picker>
 
           <vaadin-text-field
-            label="Telefon"
+            label=${t('phone')}
             name="phone"
             .value=${this.formData.phone}
             @input=${this.handleInput}
@@ -217,7 +224,7 @@ export class EmployeeFormContent extends BaseView {
           ></vaadin-text-field>
 
           <vaadin-text-field
-            label="Email"
+            label=${t('email')}
             name="email"
             type="email"
             .value=${this.formData.email}
@@ -228,7 +235,7 @@ export class EmployeeFormContent extends BaseView {
           ></vaadin-text-field>
 
           <vaadin-combo-box
-            label="Departman"
+            label=${t('department')}
             name="department"
             .items=${this.departments}
             .value=${this.formData.department}
@@ -236,10 +243,10 @@ export class EmployeeFormContent extends BaseView {
             .errorMessage=${this.errors?.department || ''}
             ?invalid=${!!this.errors?.department}
             required
-          ></vaadin-combo-box>
+          > abc</vaadin-combo-box>
 
           <vaadin-combo-box
-            label="Pozisyon"
+            label=${t('position')}
             name="position"
             .items=${this.positions}
             .value=${this.formData.position}
@@ -251,7 +258,7 @@ export class EmployeeFormContent extends BaseView {
         </div>
         <div class="form-buttons">
           <vaadin-button theme="primary" class="button-type-one" @click=${this.handleSubmit}>
-            Kaydet
+            ${t('edit_employee_btn')}
           </vaadin-button>
 
           <vaadin-button theme="tertiary" class="button-type-two" @click=${this.handleCancel}>

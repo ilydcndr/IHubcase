@@ -3,8 +3,9 @@ import ingLogo from '../assets/img/ing-logo.png';
 import userIcon from '../assets/img/employee.png';
 import plusIcon from '../assets/img/plus.png';
 import { ChangeLanguage } from './change-language';
-import { LanguageListener } from './listen-language';
+import { LanguageListener } from '../base/listen-language';
 import { t } from '../i18n/i18n';
+import { Router } from '@vaadin/router';
 import '@vaadin/select';
 
 export class AppNav extends LanguageListener {
@@ -49,6 +50,12 @@ export class AppNav extends LanguageListener {
     }
   `;
 
+  addEmployee = () => {
+    console.log("added emp")
+    Router.go('/employees/add');
+  }
+
+
   render() {
     return html`
       <nav>
@@ -64,10 +71,10 @@ export class AppNav extends LanguageListener {
           <div>
             <a href="/employees" class="centered">
               <img class="user-icon logo" src="${userIcon}" alt="User Icon" />
-              <span>Çalışanlar</span>
+              <span>${t('employees_menu')}</span>
             </a>
           </div>
-          <div class="centered add-employee">
+          <div class="centered add-employee" @click=${this.addEmployee}>
             <img src="${plusIcon}" class="logo" alt="logo" />
             <span>${t('add_new')}</span>
           </div>

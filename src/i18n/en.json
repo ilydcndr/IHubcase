@@ -18,6 +18,7 @@
     "grid_view": "Grid View",
     "table_view": "Table View",
     "first_name": "First Name",
+    "not_found": "Page Not Found",
     "edit_employee_title": "Edit Employee",
     "create_employee_title": "Create New Employee",
     "edit_employee_btn": "Save Changes",

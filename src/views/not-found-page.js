@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { LanguageListener } from '../components/listen-language';
+import { LanguageListener } from '../base/listen-language';
 
 export class NotFoundPage extends LanguageListener {
   static styles = css`
@@ -13,8 +13,7 @@ export class NotFoundPage extends LanguageListener {
 
   render() {
     return html`
-      <h1>404 - Page Not Found</h1>
-      <p>Sorry, the page you requested does not exist.</p>
+      <h1>${t('not_found')}</h1>
     `;
   }
 }

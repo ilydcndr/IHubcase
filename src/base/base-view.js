@@ -1,7 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import listImg from '../assets/icons/list-solid.svg';
 import gridImg from '../assets/icons/grid.svg';
-import searchImg from '../assets/icons/search.svg';
 import { LanguageListener  } from './listen-language';
 
 export class BaseView extends LanguageListener {
@@ -45,27 +44,11 @@ export class BaseView extends LanguageListener {
     }
   `;
 
-  static properties = {
-    isEmployeeList: { type: Boolean },
-   // edit mode eklenecek editMode: { type: Boolean}
-  };
-
-  constructor() {
-    super();
-   // this.editMode = false
-  }
-
- /* handleAddEmployee(e) {
-    this.editMode= !this.editMode;
-    html ıcı
-    <---<h1>${this.editMode ? 'Çalışan Düzenle' : 'Çalışan Ekle'}</h1>--->
-  }*/
-
   render() {
     return html`
       <div class="base-frame" @add-employee=${this.handleAddEmployee}>
         <div class="table-banner theme">
-            <h1>Çalışan Ekle</h1>
+            <h1>${this.isEmployeeList ? "Çalışan Listesi":"Çalışan Ekle" }</h1>
             ${this.isEmployeeList ? html `
               <div class="table-view">
                 <div>
