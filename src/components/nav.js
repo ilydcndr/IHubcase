@@ -1,8 +1,8 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import ingLogo from '../assets/img/ing-logo.png';
 import userIcon from '../assets/img/employee.png';
 import plusIcon from '../assets/img/plus.png';
-import { ChangeLanguage } from './change-language';
+import { LangButton } from './lang-button';
 import { LanguageListener } from '../base/listen-language';
 import { t } from '../i18n/i18n';
 import { Router } from '@vaadin/router';
@@ -51,7 +51,6 @@ export class AppNav extends LanguageListener {
   `;
 
   addEmployee = () => {
-    console.log("added emp")
     Router.go('/employees/add');
   }
 
@@ -78,7 +77,7 @@ export class AppNav extends LanguageListener {
             <img src="${plusIcon}" class="logo" alt="logo" />
             <span>${t('add_new')}</span>
           </div>
-          <change-language></change-language>
+          <lang-button></lang-button>
         </div>
       </nav>
     `;

@@ -4,7 +4,7 @@ import engFlame from '../assets/img/eng-flame.png';
 import { store } from '../redux/store';
 import { setLanguage } from '../redux/store';
 
-export class ChangeLanguage extends LitElement {
+export class LangButton extends LitElement {
     static styles = css`
     .flame {
         width:30px;
@@ -61,4 +61,4 @@ export class ChangeLanguage extends LitElement {
   }
 }
 
-customElements.define('change-language', ChangeLanguage);
+customElements.define('lang-button', LangButton);

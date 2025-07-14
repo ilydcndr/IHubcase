@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import '../components/employees-list-item.js';
+import '../components/employee.js';
 import { store } from '../redux/store.js';
 import { BaseView } from '../base/base-view.js'
 

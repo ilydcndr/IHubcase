@@ -1,18 +1,30 @@
-import { LitElement, html, css } from 'lit';
-import { LanguageListener } from './../components/listen-language';
+import { html, css } from 'lit';
+import { LanguageListener } from '../base/listen-language';
+import homeImg from '../assets/img/home-ing.png';
+import { t } from '../i18n/i18n';
 
 export class HomePage extends LanguageListener {
-  static styles = css`
-    :host {
-      display: block;
-      padding: 16px;
-      font-family: Arial, sans-serif;
-    }
-  `;
 
+  static styles = css`
+      .home-img {
+        margin:50px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+      }
+      .title {
+        display:flex;
+        justify-content:center;
+        align-items:center;
+      }
+  `;
+  
   render() {
     return html`
-      <h1>${t('welcome_title')}</h1>
+      <div class="home-img">
+          <img src="${homeImg}" alt="Home Img" />
+      </div>
+      <h1 class="title">${t('welcome_title')}</h1>
     `;
   }
 }

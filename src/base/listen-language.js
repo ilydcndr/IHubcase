@@ -1,4 +1,3 @@
-// src/components/LanguageListener.js
 import { LitElement } from 'lit';
 import { store } from '../redux/store';
 
