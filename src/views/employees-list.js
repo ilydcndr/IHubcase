@@ -37,7 +37,7 @@ export class EmployeesList extends BaseView {
   }
 
     keyMap = {
-    "": "",
+    "key":"",
     "first_name": "isim",
     "last_name": "Soyisim",
     "birth_date": "Doğum Tarihi",
@@ -54,11 +54,14 @@ export class EmployeesList extends BaseView {
     <base-view .isEmployeeList=${true}>
         <table>
           <thead>
-            <tr class="theme">
-              ${Object.keys(this.keyMap).map(
-                key => html`<th>${t(key)}</th>`
-              )}
-            </tr>
+          <tr class="theme">
+            ${Object.keys(this.keyMap).map((key, index) => {
+              if (index === 0) {
+                return html`<th></th>`;
+              }
+              return html`<th>${t(key)}</th>`;
+            })}
+          </tr>
           </thead>
           <tbody>
               ${this.employees.map(

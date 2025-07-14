@@ -81,7 +81,6 @@ export class EmployeeFormContent extends BaseView {
       this.isEditMode = true;
       const id = pathname.split('/').pop();
       this.employeeId = Number(id);
-      console.log(this.employeeId, "employeeId");
       this.loadEmployeeData();
     }
   }
@@ -93,7 +92,7 @@ export class EmployeeFormContent extends BaseView {
 
   handleSubmit() {
     if (this.validateForm()) {
-      console.log(this.formData,"editttttformDataaa")
+      console.log(this.formData,"forma gönderilen data")
       const newEmployee = {
         id: this.isEditMode ? this.employee.id : Date.now(), 
         ...this.formData,

@@ -18,6 +18,7 @@ export class AppRoot extends LitElement {
 
   render() {
     return html`
+      <confirm-modal></confirm-modal>
       <main>
         <app-nav></app-nav>
         <section id="outlet"></section>

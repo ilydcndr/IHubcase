@@ -90,6 +90,8 @@ export class AppNav extends LanguageListener {
     }
   };
 
+  //sayfa zaten employeesdeyse true gelsın
+
   render() {
     return html`
       <nav>
