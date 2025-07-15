@@ -37,7 +37,7 @@ export class EmployeesList extends BaseView {
     employees: { type: Array },
     isEmployeeList: { type: Boolean },
     viewType: { type: String }
-};
+  };
 
   constructor() {
     super();
@@ -142,8 +142,8 @@ export class EmployeesList extends BaseView {
     `;
   }
 
-render() {
-  return html`
+  render() {
+    return html`
     <base-view .isEmployeeList=${true}>
       ${this.viewType === 'list'
         ? this.renderTableView()

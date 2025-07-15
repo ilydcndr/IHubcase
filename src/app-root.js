@@ -16,7 +16,7 @@ export class AppRoot extends LitElement {
     this.modalOpen = false;
   }
 
-    firstUpdated() {
+  firstUpdated() {
     const routerOutlet = this.shadowRoot.querySelector('#outlet');
     const router = new Router(routerOutlet);
     router.setRoutes([
@@ -31,25 +31,25 @@ export class AppRoot extends LitElement {
 
     const modal = this.shadowRoot.querySelector('confirm-modal');
 
-      modal.addEventListener('modal-closed', () => {
-        this.modalOpen = false;
-        this.employeeToDelete = null;
+    modal.addEventListener('modal-closed', () => {
+      this.modalOpen = false;
+      this.employeeToDelete = null;
     });
 
-      modal.addEventListener('modal-confirmed', () => {
-        if (this.employeeToDelete) {
-          store.dispatch(deleteEmployee(this.employeeToDelete));
-        }
-        this.modalOpen = false;
-        this.employeeToDelete = null;
+    modal.addEventListener('modal-confirmed', () => {
+      if (this.employeeToDelete) {
+        store.dispatch(deleteEmployee(this.employeeToDelete));
+      }
+      this.modalOpen = false;
+      this.employeeToDelete = null;
     });
   }
-    
+
   listenRequestDelete = () => {
     this.addEventListener('request-delete-confirm', (e) => {
-    const employee = e.detail.employee;
-    this.employeeToDelete = employee;
-    this.modalOpen = true; 
+      const employee = e.detail.employee;
+      this.employeeToDelete = employee;
+      this.modalOpen = true;
     });
   }
 

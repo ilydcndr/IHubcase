@@ -1,5 +1,7 @@
 {
     "position": "Position",
+    "edit": "Edit",
+    "delete": "Delete",
     "employees_menu": "Employees",
     "birth_date": "Date of Birth",
     "phone": "Phone",
@@ -8,7 +10,7 @@
     "department": "Department",
     "add_new": "Add New",
     "last_name": "Last Name",
-    "delete_confirm_message": "Selected employee record of <strong>{fullname}</strong> will be deleted",
+    "delete_confirm_message": "Are you sure you want to delete {fullname}?",
     "welcome_title": "Welcome to ING Hubs",
     "employment_date": "Date of Employment",
     "actions": "Actions",

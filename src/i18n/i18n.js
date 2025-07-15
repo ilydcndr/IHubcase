@@ -12,7 +12,6 @@ async function initI18n() {
     lng: store.getState().language.lang || 'en',
     fallbackLng: 'en',
   });
-  console.log('i18next initialized with', i18next.language);
 }
 
 initI18n().catch(console.error);

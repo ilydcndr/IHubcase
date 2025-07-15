@@ -1,4 +1,4 @@
-import { html,css } from 'lit';
+import { html, css } from 'lit';
 import { LanguageListener } from '../base/listen-language';
 import { t } from '../i18n/i18n';
 

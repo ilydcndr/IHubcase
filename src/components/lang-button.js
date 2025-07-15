@@ -5,7 +5,7 @@ import { store } from '../redux/store';
 import { setLanguage } from '../redux/store';
 
 export class LangButton extends LitElement {
-    static styles = css`
+  static styles = css`
     .flame {
         width:30px;
         height:20px;
@@ -35,18 +35,32 @@ export class LangButton extends LitElement {
     this.lang = document.documentElement.lang || 'en';
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    this.unsubscribe = store.subscribe(() => {
+      const stateLang = store.getState().language?.lang;;
+      if (stateLang !== this.lang) {
+        this.lang = stateLang;
+      }
+    });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.unsubscribe?.();
+  }
+
   changeLanguage(lang) {
     this.lang = lang;
     store.dispatch(setLanguage(lang))
-    console.log(lang,"lang")
   }
 
   render() {
     return html`
-
+       
       <div class="flame-select">
         <div>
-           <img src="${this.lang ==='tr'? trFlame : engFlame}" class="flame" alt="Flame" />
+           <img src="${this.lang === 'tr' ? trFlame : engFlame}" class="flame" alt="Flame" />
         </div>
         <div class="flame-list">
             <div @click=${() => this.changeLanguage('tr')}>

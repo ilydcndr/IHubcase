@@ -18,7 +18,7 @@ export class HomePage extends LanguageListener {
         align-items:center;
       }
   `;
-  
+
   render() {
     return html`
       <div class="home-img">

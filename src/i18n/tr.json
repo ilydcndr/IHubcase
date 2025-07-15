@@ -16,7 +16,7 @@
     "employees_page_title": "Çalışan Listesi",
     "create_employee_btn": "Çalışan Oluştur",
     "add_new": "Yeni Ekle",
-    "delete_confirm_message": "<strong>{fullname}</strong> adlı çalışanın kaydı silinecektir",
+    "delete_confirm_message": "{fullname} çalışanını silmek istediğinize emin misiniz?",
     "employment_date": "İşe Alım Tarihi",
     "create_employee_title": "Yeni Çalışan Ekle",
     "edit_employee_title": "Çalışan Kaydını Düzenle",
@@ -25,5 +25,7 @@
     "app_description": "Çalıan Yönetim Uygulaması",
     "confirm_modal_title": "Eminmisiniz?",
     "phone": "Telefon",
-    "proceed": "Devam"
+    "proceed": "Devam",
+    "edit": "Düzenle",
+    "delete": "Sil"
 }

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest"
   },
   "dependencies": {
     "@vaadin/button": "^24.8.3",
@@ -21,10 +22,17 @@
     "lit": "^3.3.0"
   },
   "devDependencies": {
+    "@lit-labs/testing": "^0.2.7",
+    "@open-wc/testing": "^4.0.0",
     "@reduxjs/toolkit": "^2.8.2",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/user-event": "^14.6.1",
     "@vaadin/router": "^2.0.0",
     "@vaadin/select": "^24.8.3",
+    "jsdom": "^26.1.0",
     "redux": "^5.0.1",
-    "vite": "^7.0.4"
+    "vite": "^7.0.4",
+    "vitest": "^3.2.4"
   }
 }

@@ -1,7 +1,8 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import { t } from '../i18n/i18n';
+import { LanguageListener } from '../base/listen-language';
 
-class CardComponent extends LitElement {
+class CardComponent extends LanguageListener {
   static styles = css`
     .card {
       border: 1px solid #ddd;
@@ -79,24 +80,24 @@ class CardComponent extends LitElement {
   }
 
 
-goEmployeeDetail(emp) {
-  this.dispatchEvent(new CustomEvent('go-employee-detail', {
-    detail: emp,
-    bubbles: true,
-    composed: true
-  }));
-}
+  goEmployeeDetail(emp) {
+    this.dispatchEvent(new CustomEvent('go-employee-detail', {
+      detail: emp,
+      bubbles: true,
+      composed: true
+    }));
+  }
 
-deleteEmployee(employee) {
-  this.dispatchEvent(new CustomEvent('request-delete-confirm', {
-    detail: {
-      employee,
-      modalOpened: false
-    },
-    bubbles: true,
-    composed: true
-  }));
-}
+  deleteEmployee(employee) {
+    this.dispatchEvent(new CustomEvent('request-delete-confirm', {
+      detail: {
+        employee,
+        modalOpened: false
+      },
+      bubbles: true,
+      composed: true
+    }));
+  }
 
   render() {
     return html`
@@ -104,7 +105,7 @@ deleteEmployee(employee) {
         <div class="grid">
           ${Object.keys(this.keyMap).slice(1, -1).map(key => html`
             <div class="item">
-              <div class="key">${this.keyMap[key] ?? key}</div>
+              <div class="key">${t(key)}</div>
               <div class="value">${this.employee[key] ?? '-'}</div>
             </div>
           `)}

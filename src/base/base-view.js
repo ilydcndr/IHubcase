@@ -1,7 +1,8 @@
 import { html, css } from 'lit';
 import listImg from '../assets/icons/list-solid.svg';
 import gridImg from '../assets/icons/grid.svg';
-import { LanguageListener  } from './listen-language';
+import { LanguageListener } from './listen-language';
+import { t } from '../i18n/i18n'
 
 export class BaseView extends LanguageListener {
   static styles = css`
@@ -46,18 +47,23 @@ export class BaseView extends LanguageListener {
 
   selectView(view) {
     this.dispatchEvent(new CustomEvent('view-type-change', {
-    detail: { view },
-    bubbles: true,
-    composed: true
-    })) 
+      detail: { view },
+      bubbles: true,
+      composed: true
+    }))
   }
 
   render() {
+    const title = this.isEmployeeList
+      ? t('employees_page_title')
+      : window.location.pathname.startsWith('/employees/edit/')
+        ? t('edit_employee_title')
+        : t('create_employee_btn');
     return html`
       <div class="base-frame" @add-employee=${this.handleAddEmployee}>
         <div class="table-banner theme">
-            <h1>${this.isEmployeeList ? "Çalışan Listesi":"Çalışan Ekle" }</h1>
-            ${this.isEmployeeList ? html `
+            <h1>${title}</h1>
+            ${this.isEmployeeList ? html`
               <div class="table-view" view-type="list">
                 <div>
                   <img class="logo" src="${listImg}" @click=${() => this.selectView('list')} alt="List Img" />

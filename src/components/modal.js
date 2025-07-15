@@ -73,32 +73,33 @@ export class ConfirmModal extends LitElement {
   }
 `;
 
- static properties = {
-  open: { type: Boolean, reflect: true },
-  employee: { type: Object },
-};
+  static properties = {
+    open: { type: Boolean, reflect: true },
+    employee: { type: Object },
+  };
 
-confirmModal() {
-  this.dispatchEvent(new CustomEvent('modal-confirmed', {
-    bubbles: true,
-    composed: true,
-  }));
-  this.closeModal();
-}
+  confirmModal() {
+    this.dispatchEvent(new CustomEvent('modal-confirmed', {
+      bubbles: true,
+      composed: true,
+    }));
+    this.closeModal();
+  }
 
-closeModal() {
-  this.open = false;
-  this.dispatchEvent(new CustomEvent('modal-closed', {
-    bubbles: true,
-    composed: true,
-  }));
-}
+  closeModal() {
+    this.open = false;
+    this.dispatchEvent(new CustomEvent('modal-closed', {
+      bubbles: true,
+      composed: true,
+    }));
+  }
 
 
-render() {
-  if (!this.open) return html``;
-
-  return html`
+  render() {
+    if (!this.open) return html``;
+    const fullname = `${this.employee?.first_name ?? ''} ${this.employee?.last_name ?? ''}`;
+    const message = t('delete_confirm_message').replace('{fullname}', fullname);
+    return html`
     <div class="modal-backdrop" @click=${this._handleClose}></div>
     <div class="confirm-modal" @click=${e => e.stopPropagation()}>
       <div class="modal-header">
@@ -128,14 +129,14 @@ render() {
         </svg>
         </div>
       </div>
-      <p>${this.message || `"${this.employee?.first_name} ${this.employee?.last_name}" çalışanını silmek istediğinize emin misiniz?`}</p>
+      <p .innerHTML=${message}></p>
       <div class="actions">
         <button class="confirm-btn" @click=${this.confirmModal}>${t('proceed')}</button>
         <button class="cancel-btn" @click=${this.closeModal}>${t('cancel')}</button>
       </div>
     </div>
   `;
-}
+  }
 }
 
 customElements.define('confirm-modal', ConfirmModal);

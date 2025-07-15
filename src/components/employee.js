@@ -77,31 +77,31 @@ export class EmployeesListItem extends LitElement {
     }
   `;
 
-static properties = {
-  employee: { type: Object },
-  keyMap: { type: Object }
-};
+  static properties = {
+    employee: { type: Object },
+    keyMap: { type: Object }
+  };
 
-goEmployeeDetail(emp) {
-  this.dispatchEvent(new CustomEvent('go-employee-detail', {
-    detail: emp,
-    bubbles: true,
-    composed: true
-  }));
-}
+  goEmployeeDetail(emp) {
+    this.dispatchEvent(new CustomEvent('go-employee-detail', {
+      detail: emp,
+      bubbles: true,
+      composed: true
+    }));
+  }
 
-deleteEmployee(employee) {
-  this.dispatchEvent(new CustomEvent('request-delete-confirm', {
-    detail: {
-      employee,
-      modalOpened: false
-    },
-    bubbles: true,
-    composed: true
-  }));
-}
+  deleteEmployee(employee) {
+    this.dispatchEvent(new CustomEvent('request-delete-confirm', {
+      detail: {
+        employee,
+        modalOpened: false
+      },
+      bubbles: true,
+      composed: true
+    }));
+  }
 
-actionArea = (employee) => html`
+  actionArea = (employee) => html`
   <div class="action-list">
     <div @click=${(e) => this.goEmployeeDetail(employee)}>
       <img src="${editIcon}" class="logo" alt="Edit" />
@@ -112,7 +112,7 @@ actionArea = (employee) => html`
   </div>
 `
 
-  checkboxArea = () => html `
+  checkboxArea = () => html`
     <vaadin-checkbox
       ?checked=${this.checked}
       @checked-changed=${e => this.checked = e.detail.value}
@@ -123,17 +123,17 @@ actionArea = (employee) => html`
     return html`     
     <tr>
       ${Object.keys(this.keyMap).map(
-        (key, index, arr) => {
-          const isLast = index === arr.length - 1;
-          return html`
+      (key, index, arr) => {
+        const isLast = index === arr.length - 1;
+        return html`
         <td>
           ${isLast
-              ? this.actionArea(this.employee)
-              : !this.employee[key]
+            ? this.actionArea(this.employee)
+            : !this.employee[key]
               ? this.checkboxArea()
               : this.employee[key]}
         </td>`
-        })}
+      })}
     </tr>`;
   }
 }

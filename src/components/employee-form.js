@@ -52,7 +52,7 @@ export class EmployeeFormContent extends BaseView {
 
   static properties = {
     formData: { type: Object },
-    isEditMode: { type : Boolean },
+    isEditMode: { type: Boolean },
   };
 
   constructor() {
@@ -68,14 +68,14 @@ export class EmployeeFormContent extends BaseView {
       department: '',
       position: '',
     };
-    this.departments = ['Analytics', 'Tech' ];
-    this.positions = ['Junior', 'Medior', 'Senior' ];
+    this.departments = ['Analytics', 'Tech'];
+    this.positions = ['Junior', 'Medior', 'Senior'];
     this.isEditMode = null
   }
 
   connectedCallback() {
     super.connectedCallback();
-     const pathname = window.location.pathname;
+    const pathname = window.location.pathname;
 
     if (pathname.startsWith('/employees/edit/')) {
       this.isEditMode = true;
@@ -100,14 +100,14 @@ export class EmployeeFormContent extends BaseView {
       if (!this.isEditMode || !newEmployee.id) {
         newEmployee.id = Date.now();
       }
-      if(this.isEditMode){
+      if (this.isEditMode) {
         store.dispatch(editEmployee(newEmployee));
       } else {
         store.dispatch(saveEmployee(newEmployee));
       }
       this.resetForm();
       Router.go('/employees');
-    } 
+    }
   }
 
   handleInput(e) {
