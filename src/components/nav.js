@@ -66,22 +66,19 @@ export class AppNav extends LanguageListener {
 
   connectedCallback() {
     super.connectedCallback();
-    window.addEventListener('popstate', this.checkActivePage);
+    window.addEventListener('vaadin-router-location-changed', this.checkActivePage);
+    this.checkActivePage();
   }
 
   disconnectedCallback() {
-    window.removeEventListener('popstate', this.checkActivePage);
+    window.removeEventListener('vaadin-router-location-changed', this.checkActivePage);
     super.disconnectedCallback();
   }
 
   checkActivePage = () => {
     const currentPath = window.location.pathname;
-    const isEmployeePage = currentPath === '/employees';
-
-    if (this.isEmployeePage !== isEmployeePage) {
-      this.isEmployeePage = isEmployeePage;
-      this.requestUpdate();
-    }
+    this.isEmployeePage = currentPath === '/employees';
+    this.requestUpdate();
   };
 
   addEmployee = () => {
@@ -89,8 +86,6 @@ export class AppNav extends LanguageListener {
       Router.go('/employees/add');
     }
   };
-
-  //sayfa zaten employeesdeyse true gelsın
 
   render() {
     return html`

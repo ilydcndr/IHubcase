@@ -1,4 +1,4 @@
-export function isEmpty(value) {
+export const isEmpty = (value) => {
   if (!value) {
     return true;
   }
@@ -12,12 +12,12 @@ export function isEmpty(value) {
   return false;
 }
 
-export function isValidName(value) {
+export const isValidName = (value) => {
   const regex = /^[A-Za-zğüşöçıİĞÜŞÖÇ\s]+$/u;
   return regex.test(value.trim());
 }
 
-export function isValidDate(dateStr) {
+export const isValidDate = (dateStr) => {
 
   const selectedDate = new Date(dateStr);
   const today = new Date();
@@ -28,12 +28,12 @@ export function isValidDate(dateStr) {
   return selectedDate <= today;
 }
 
-export function isValidPhone(phone) {
+export const isValidPhone = (phone) => {
   const regex = /^[\d\s()+-]+$/;
   return regex.test(phone.trim());
 }
 
-export function isValidEmail(email) {
+export const isValidEmail = (email) => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email.trim());
 }

@@ -1,8 +1,10 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
 import '../components/employee.js';
 import { store } from '../redux/store.js';
 import { BaseView } from '../base/base-view.js';
 import { t } from '../i18n/i18n';
+import '../components/card.js';
+import { Router } from '@vaadin/router';
 
 export class EmployeesList extends BaseView {
   static styles = css`
@@ -12,32 +14,88 @@ export class EmployeesList extends BaseView {
       table-layout: fixed;
     }
     .theme {
-      color:var(--theme-color);;
+      color: var(--theme-color);
     }
     th {
       padding: 15px 0;
+    }
+    card-component {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      width:90%;
+    }
+    .card-list {
+      justify-items: center;
+      align-items: center; 
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
     }
   `;
 
   static properties = {
     employees: { type: Array },
-    isEmployeeList: { type: Boolean }
-  };
+    isEmployeeList: { type: Boolean },
+    viewType: { type: String }
+};
 
   constructor() {
     super();
     this.employees = [];
+    this.isEmployeeList = true;
+    this.viewType = localStorage.getItem('viewType') || 'list';
 
-    this.employees = store.getState().employees.list;
-
-    store.subscribe(() => {
-      const state = store.getState();
-      this.employees = state.employees.list;
-    });
+    this.listenRequestDelete = e => {
+      const employee = e.detail.employee;
+      this.employeeToDelete = employee;
+      this.modalOpen = true;
+      this.requestUpdate();
+    };
   }
 
-    keyMap = {
-    "key":"",
+  connectedCallback() {
+    super.connectedCallback();
+
+    this.employees = [...store.getState().employees.list];
+
+    this.unsubscribe = store.subscribe(() => {
+      this.employees = [...store.getState().employees.list];
+      this.requestUpdate();
+    });
+
+    this.changeViewType = e => {
+      const newView = e.detail.view;
+      this.viewType = newView;
+      localStorage.setItem('viewType', newView);
+      this.requestUpdate();
+    };
+
+    this.addEventListener('request-delete-confirm', this.listenRequestDelete);
+    this.addEventListener('view-type-change', this.changeViewType);
+    this.addEventListener('go-employee-detail', this.handleEmployeeSelected);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.unsubscribe?.();
+    this.removeEventListener('request-delete-confirm', this.listenRequestDelete);
+    this.removeEventListener('view-type-change', this.changeViewType);
+    this.removeEventListener('go-employee-detail', this.handleEmployeeSelected);
+  }
+
+  handleEmployeeSelected = (e) => {
+    const emp = e.detail;
+    Router.go(`/employees/edit/${emp.id}`);
+  };
+
+  openDeleteModal = (employee) => {
+    this.employeeToDelete = employee;
+    this.modalOpen = true;
+    this.requestUpdate();
+  };
+
+  keyMap = {
+    "key": "",
     "first_name": "isim",
     "last_name": "Soyisim",
     "birth_date": "Doğum Tarihi",
@@ -46,36 +104,52 @@ export class EmployeesList extends BaseView {
     "email": "E-mail",
     "department": "Departman",
     "position": "Pozisyon",
-    "actions":"Eylemler"
-    }
+    "actions": "Eylemler"
+  };
 
-  render() {
+  renderTableView() {
     return html`
-    <base-view .isEmployeeList=${true}>
-        <table>
-          <thead>
+      <table>
+        <thead>
           <tr class="theme">
-            ${Object.keys(this.keyMap).map((key, index) => {
-              if (index === 0) {
-                return html`<th></th>`;
-              }
-              return html`<th>${t(key)}</th>`;
-            })}
+            ${Object.keys(this.keyMap).map((key, index) => html`
+              <th>${index === 0 ? '' : t(key)}</th>
+            `)}
           </tr>
-          </thead>
-          <tbody>
-              ${this.employees.map(
-                employee => html`
-                  <employees-list-item
-                    .employee=${employee}
-                    .keyMap=${this.keyMap}>
-                  </employees-list-item>
-                `
-              )}
-          </tbody>
-        </table>
-  </base-view>
+        </thead>
+        <tbody>
+          ${this.employees?.map(employee => html`
+            <employees-list-item
+              .employee=${employee}
+              .keyMap=${this.keyMap}>
+            </employees-list-item>
+          `)}
+        </tbody>
+      </table>
     `;
+  }
+
+  renderCardView() {
+    return html`
+        <div class="card-list">
+          ${this.employees?.map(employee => html`
+            <card-component
+              .employee=${employee}
+              .keyMap=${this.keyMap}>
+            </card-component>
+          `)}
+      </div>
+    `;
+  }
+
+render() {
+  return html`
+    <base-view .isEmployeeList=${true}>
+      ${this.viewType === 'list'
+        ? this.renderTableView()
+        : this.renderCardView()}
+    </base-view>
+  `;
   }
 }
 

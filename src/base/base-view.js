@@ -20,7 +20,7 @@ export class BaseView extends LanguageListener {
       max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
-      background-color: white;
+      background-color: unset;
       box-sizing: border-box;
     }
     .theme {
@@ -44,18 +44,26 @@ export class BaseView extends LanguageListener {
     }
   `;
 
+  selectView(view) {
+    this.dispatchEvent(new CustomEvent('view-type-change', {
+    detail: { view },
+    bubbles: true,
+    composed: true
+    })) 
+  }
+
   render() {
     return html`
       <div class="base-frame" @add-employee=${this.handleAddEmployee}>
         <div class="table-banner theme">
             <h1>${this.isEmployeeList ? "Çalışan Listesi":"Çalışan Ekle" }</h1>
             ${this.isEmployeeList ? html `
-              <div class="table-view">
+              <div class="table-view" view-type="list">
                 <div>
-                  <img class="logo" src="${listImg}" alt="List Img" />
+                  <img class="logo" src="${listImg}" @click=${() => this.selectView('list')} alt="List Img" />
                 </div>
                 <div>
-                  <img class="logo" src="${gridImg}" alt="Grid Img" />
+                  <img class="logo" src="${gridImg}" @click=${() => this.selectView('grid')} alt="Grid Img"  />
                 </div>
             </div> `: null}
         </div>

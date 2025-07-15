@@ -12,6 +12,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --theme-color: #FF6200;
+  --theme-color-2: #6A5ACD;
 }
 
 body {

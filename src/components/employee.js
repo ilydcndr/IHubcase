@@ -77,21 +77,33 @@ export class EmployeesListItem extends LitElement {
     }
   `;
 
-  static properties = {
-    employee: { type: Object },
-  };
+static properties = {
+  employee: { type: Object },
+  keyMap: { type: Object }
+};
 
-editEmployee = (emp) => {
-  Router.go(`/employees/edit/${emp.id}`);
+goEmployeeDetail(emp) {
+  this.dispatchEvent(new CustomEvent('go-employee-detail', {
+    detail: emp,
+    bubbles: true,
+    composed: true
+  }));
 }
 
-deleteEmployee = (emp) => {
-  store.dispatch(deleteEmployee(emp));
+deleteEmployee(employee) {
+  this.dispatchEvent(new CustomEvent('request-delete-confirm', {
+    detail: {
+      employee,
+      modalOpened: false
+    },
+    bubbles: true,
+    composed: true
+  }));
 }
 
 actionArea = (employee) => html`
   <div class="action-list">
-    <div @click=${(e) => this.editEmployee(employee)}>
+    <div @click=${(e) => this.goEmployeeDetail(employee)}>
       <img src="${editIcon}" class="logo" alt="Edit" />
     </div>
     <div @click=${(e) => this.deleteEmployee(employee)}>

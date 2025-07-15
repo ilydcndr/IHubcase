@@ -4,3 +4,4 @@ import '../components/nav.js';
 import '../components/employee-form.js';
 import './home-page.js';
 import '../components/modal.js';
+import '../components/card.js'

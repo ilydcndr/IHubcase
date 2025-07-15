@@ -45,14 +45,14 @@ export class EmployeeFormContent extends BaseView {
     .button-type-two {
       background: white;
       font-size:bold;
-      border: 2px solid purple;
-      color: purple;
+      border: 2px solid var(--theme-color-2);
+      color: var(--theme-color-2);
     }
   `;
 
   static properties = {
     formData: { type: Object },
-    isEditMode: { type : String },
+    isEditMode: { type : Boolean },
   };
 
   constructor() {
@@ -70,12 +70,12 @@ export class EmployeeFormContent extends BaseView {
     };
     this.departments = ['Analytics', 'Tech' ];
     this.positions = ['Junior', 'Medior', 'Senior' ];
-    this.isEditMode= false;
+    this.isEditMode = null
   }
 
   connectedCallback() {
     super.connectedCallback();
-    const pathname = window.location.pathname;
+     const pathname = window.location.pathname;
 
     if (pathname.startsWith('/employees/edit/')) {
       this.isEditMode = true;
@@ -86,19 +86,21 @@ export class EmployeeFormContent extends BaseView {
   }
 
   loadEmployeeData() {
-    this.formData = store.getState().employees.list.find(emp => emp.id === this.employeeId);
-    this.requestUpdate();
+    const employee = store.getState().employees.list.find(emp => emp.id === this.employeeId);
+    if (employee) {
+      this.formData = { ...employee };
+      this.requestUpdate();
+    }
   }
 
   handleSubmit() {
     if (this.validateForm()) {
-      console.log(this.formData,"forma gönderilen data")
-      const newEmployee = {
-        id: this.isEditMode ? this.employee.id : Date.now(), 
-        ...this.formData,
-      };
+      let newEmployee = { ...this.formData };
+
+      if (!this.isEditMode || !newEmployee.id) {
+        newEmployee.id = Date.now();
+      }
       if(this.isEditMode){
-        console.log(this.employee.id,"edittttt iddd")
         store.dispatch(editEmployee(newEmployee));
       } else {
         store.dispatch(saveEmployee(newEmployee));
