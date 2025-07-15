@@ -13,6 +13,10 @@ export class EmployeesList extends BaseView {
       border-collapse: collapse;
       table-layout: fixed;
     }
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
     .theme {
       color: var(--theme-color);
     }
@@ -31,6 +35,11 @@ export class EmployeesList extends BaseView {
       grid-template-columns: repeat(2, 1fr);
       gap: 16px;
     }
+      @media (max-width: 600px) {
+    .card-list {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
   `;
 
   static properties = {
@@ -109,6 +118,7 @@ export class EmployeesList extends BaseView {
 
   renderTableView() {
     return html`
+    <div class="table-wrapper">
       <table>
         <thead>
           <tr class="theme">
@@ -126,6 +136,7 @@ export class EmployeesList extends BaseView {
           `)}
         </tbody>
       </table>
+    </div>
     `;
   }
 
