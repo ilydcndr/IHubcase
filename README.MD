@@ -27,7 +27,7 @@ This project is a modern web component-based application built with [Vite](https
 
 ```bash
 git clone https://github.com/ilydcndr/IHubcase.git
-cd IHubcase/employee-portal
+cd IHubcase
 npm run dev 
 ```
 
