@@ -1,4 +1,3 @@
-import './app-root.js';
 
 # Employee Portal
 
