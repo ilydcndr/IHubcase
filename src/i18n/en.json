@@ -26,5 +26,14 @@
     "edit_employee_btn": "Save Changes",
     "app_description": "Employee Management Application",
     "employees_page_title": "Employee List",
-    "create_employee_btn": "Create Employee"
+    "create_employee_btn": "Create Employee",
+    "required_name": "Name is required",
+    "required_surname": "Surname is a required field",
+    "required_birth": "Date of birth is a required field",
+    "required_emp_date": "Employment start date is required",
+    "required_phone": "Phone number is required",
+    "required_email": "Email is a required field",
+    "required_departman": "Department selection is required",
+    "required_position": "Position selection is required",
+    "missing_format":" Missing format"
 }

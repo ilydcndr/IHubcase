@@ -83,6 +83,14 @@ export class EmployeeFormContent extends BaseView {
       this.employeeId = Number(id);
       this.loadEmployeeData();
     }
+
+    store.subscribe(() => {
+      const lang = store.getState().language.lang;
+      if (lang !== this.lastLang) {
+        this.lastLang = lang;
+        this.validateForm();
+      }
+    });
   }
 
   loadEmployeeData() {
@@ -143,14 +151,14 @@ export class EmployeeFormContent extends BaseView {
     let isValid = true;
 
     const validations = [
-      { key: 'first_name', error: 'İsim zorunlu', validate: isValidName },
-      { key: 'last_name', error: 'Soyisim zorunlu', validate: isValidName },
-      { key: 'birth_date', error: 'Doğum tarihi zorunlu', validate: isValidDate },
-      { key: 'employment_date', error: 'İşe başlama tarihi zorunlu', validate: isValidDate },
-      { key: 'phone', error: 'Telefon numarası zorunlu', validate: isValidPhone },
-      { key: 'email', error: 'Email zorunlu', validate: isValidEmail },
-      { key: 'department', error: 'Departman seçilmeli', validate: null },
-      { key: 'position', error: 'Pozisyon seçilmeli', validate: null }
+      { key: 'first_name', error: t('required_name'), validate: isValidName },
+      { key: 'last_name', error: t('required_surname'), validate: isValidName },
+      { key: 'birth_date', error: t('required_birth'), validate: isValidDate },
+      { key: 'employment_date', error: t('required_emp_date'), validate: isValidDate },
+      { key: 'phone', error: t('required_phone'), validate: isValidPhone },
+      { key: 'email', error: t('required_email'), validate: isValidEmail },
+      { key: 'department', error: t('required_departman'), validate: null },
+      { key: 'position', error: t('required_position'), validate: null }
     ];
 
     validations.forEach(({ key, error, validate }) => {
@@ -162,7 +170,7 @@ export class EmployeeFormContent extends BaseView {
         isValid = false;
       } else if (validate && !validate(this.formData[key])) {
         inputElement.invalid = true;
-        inputElement.errorMessage = error + ' (Hatalı format)';
+        inputElement.errorMessage = error +','+ t('missing_format');
         isValid = false;
       }
     });

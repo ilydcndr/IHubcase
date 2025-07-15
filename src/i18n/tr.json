@@ -27,5 +27,14 @@
     "phone": "Telefon",
     "proceed": "Devam",
     "edit": "Düzenle",
-    "delete": "Sil"
+    "delete": "Sil",
+    "required_name":"İsim zorunlu",
+    "required_surname":"Soyisim zorunlu alan",
+    "required_birth":"Doğum tarihi zorunlu alan",
+    "required_emp_date":"İşe başlama tarihi zorunlu alan",
+    "required_phone":"Telefon numarası zorunlu alan",
+    "required_email":"Email zorunlu alan",
+    "required_departman":"Departman seçimi zorunlu",
+    "required_position":"Pozisyon seçimi Zorunlu ",
+    "missing_format":" Hatalı format"
 }
